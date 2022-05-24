@@ -5,5 +5,5 @@ from view import View
 
 @dataclass
 class Url:
-    url: str
+    path: str
     view: View()

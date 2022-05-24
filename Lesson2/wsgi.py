@@ -28,7 +28,7 @@ class Framework:
             return getattr(view, request.method)(view, request)
         return 'Метод не поддерживается'
 
-    def _prepare_url(self, url: Url):
-        if url[-1] == '/':
-            return url[:-1]
-        return url
+    # def _prepare_url(self, url: Url):
+    #     if url[-1] == '/':
+    #         return url[:-1]
+    #     return url

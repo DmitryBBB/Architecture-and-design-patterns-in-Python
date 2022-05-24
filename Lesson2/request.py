@@ -22,10 +22,11 @@ class Request:
 
         qs = qs.split('&')
         for q_str in qs:
+            print(q_str)
             key, value = q_str.split('=')
             if query_params.get(key):
                 query_params[key].append(value)
             else:
                 query_params[key] = [value]
-
+        print(query_params)
         return query_params
