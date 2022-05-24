@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from view import View
+from Lesson2.view import View
 
 
 @dataclass

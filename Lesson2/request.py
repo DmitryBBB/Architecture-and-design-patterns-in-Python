@@ -5,6 +5,7 @@ class Request:
         self.path = environ['PATH_INFO']
         self.headers = self._get_headers(environ)
 
+
     def _get_headers(self, environ):
         headers = {}
         for key, value in environ.items():
