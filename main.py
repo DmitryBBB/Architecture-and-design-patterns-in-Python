@@ -1,20 +1,16 @@
-from Lesson2.urls import Url
-from Lesson2.view import View
-from Lesson2.wsgi import Framework
-from Lesson2.response import Response
+import os.path
+
+from Lesson3.main import Framework
+from urls import urlpatterns
+
+settings = {
+    'BASE_DIR': os.path.dirname(os.path.abspath(__file__)),
+    'TEMPLATE_DIR_NAME': 'templates'
+}
+
+app = Framework(
+    urls=urlpatterns,
+    settings=settings
+)
 
 
-class MyView(View):
-    def get(self, request):
-        return Response(body='GET SUCCESS')
-
-    def post(self, request):
-        return Response(status='201 Created', body='POST SUCCESS', headers={'MY_HEADERS': '222'})
-
-
-urls = [
-    Url('/page', MyView),
-
-]
-
-app = Framework(urls)
