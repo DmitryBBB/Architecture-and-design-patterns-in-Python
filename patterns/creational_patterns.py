@@ -78,7 +78,7 @@ class Category:
 
     def course_count(self):
         result = len(self.courses)
-        if self.courses:
+        if self.category:
             result += self.category.course_count()
         return result
 
