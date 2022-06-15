@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+	Обучение программированию
+{% endblock %}
+{% block style %}
+	{% include "inc-style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "inc-menu.html" %}
+{% endblock %}
+{% block body %}
+    <form action="" method="post">
+        <fieldset>
+            <legend>Обратная связь</legend>
+            <p><label class="title" for="name">Ваше имя:</label>
+                 <input type="text" name="name" id="name"><br />
+                 <label class="title" for="email">Ваш email:</label>
+                 <input type="text" name="email" id="email"></p>
+            <p><label for="location" class="title">Ближайший центр:</label>
+                 <select name="location" id="location">
+                     <option value="msk">Москва</option>
+                     <option value="spb">Санкт-Петербург</option>
+                     <option value="ekb">Екатеринбург</option>
+                 </select></p>
+            <p><textarea placeholder="Ваше сообщение"></textarea></p>
+            <span class="title">Являетесь участником?</span>
+            <label><input type="radio" name="member" value="yes" /> Да</label>
+            <label><input type="radio" name="member" value="no" /> Нет</label></p>
+        </fieldset>
+    <div class="submit"><input type="submit" value="Отправить" /></div>
+    </form>
+{% endblock %}
