@@ -2,28 +2,39 @@ from datetime import date
 
 from Lesson3.templator import render
 from patterns.creational_patterns import Engine, Logger
+from patterns.stuctural_patterns import AppRoute, Debug
 
 site = Engine()
 logger = Logger('main')
 
+routes = {}
 
-# controller - main page
+
+# контроллер главная страница
+@AppRoute(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 OK', render('index.html', objects_list=site.categories)
 
 
+@AppRoute(routes=routes, url='/about/')
 class About:
+    @Debug(name='About')
     def __call__(self, request):
         return '200 OK', render('about.html')
 
 
+@AppRoute(routes=routes, url='/contacts/')
 class Contacts:
+    @Debug(name='Contacts')
     def __call__(self, request):
         return '200 OK', render('contacts.html')
 
 
+@AppRoute(routes=routes, url='/study-programs/')
 class StudyPrograms:
+    @Debug(name='study-programs')
     def __call__(self, request):
         return '200 OK', render('study-programs.html', data=date.today())
 
@@ -33,7 +44,9 @@ class NotFound404:
         return '404 Page not found'
 
 
+@AppRoute(routes=routes, url='/courses-list/')
 class CoursesList:
+    @Debug(name='courses_list')
     def __call__(self, request):
         logger.log('courses llist')
         try:
@@ -47,6 +60,7 @@ class CoursesList:
             return '200 OK', 'No courses have been added yet'
 
 
+@AppRoute(routes=routes, url='/create-course/')
 class CreateCourse:
     category_id = -1
 
@@ -79,6 +93,7 @@ class CreateCourse:
 
 
 # контроллер - создать категорию
+@AppRoute(routes=routes, url='/create-category/')
 class CreateCategory:
     def __call__(self, request):
 
@@ -108,6 +123,7 @@ class CreateCategory:
 
 
 # контроллер - список категорий
+@AppRoute(routes=routes, url='/category-list/')
 class CategoryList:
     def __call__(self, request):
         logger.log('Список категорий')
@@ -116,6 +132,7 @@ class CategoryList:
 
 
 # контроллер - копировать курс
+@AppRoute(routes=routes, url='/course-list/')
 class CopyCourse:
     def __call__(self, request):
         request_params = request['request_params']
