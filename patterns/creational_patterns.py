@@ -1,10 +1,13 @@
 from copy import deepcopy
 from quopri import decodestring
 
-
 # Абстрактный пользователь
+from patterns.behavioral_patterns import Subject, FileWriter
+
+
 class User:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 # Учитель
@@ -14,7 +17,9 @@ class Teacher(User):
 
 # студен
 class Student(User):
-    pass
+    def __init__(self, name):
+        self.courses = []
+        super().__init__(name)
 
 
 class UserFactory:
@@ -36,11 +41,21 @@ class CoursePrototype:
         return deepcopy(self)
 
 
-class Course(CoursePrototype):
+class Course(CoursePrototype, Subject):
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.courses.append(self)
+        self.students = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.students[item]
+
+    def add_student(self, student: Student):
+        self.students.append(student)
+        student.courses.append(self)
+        self.notify()
 
 
 # Интерактивные курсы
@@ -53,6 +68,7 @@ class RecordCourse(Course):
     pass
 
 
+# порождающий паттерн Абстрактная фабрика - фабрика курсов
 class CourseFactory:
     types = {
         'interactive': InteractiveCourse,
@@ -116,6 +132,11 @@ class Engine:
                 return item
         return None
 
+    def get_student(self, name) -> Student:
+        for item in self.students:
+            if item.name == name:
+                return item
+
     @staticmethod
     def decode_value(val):
         val_b = bytes(val.replace('%', '=').replace('+', ''), 'utf-8')
@@ -143,9 +164,10 @@ class SingletonByName(type):
 
 
 class Logger(metaclass=SingletonByName):
-    def __init__(self, name):
+    def __init__(self, name, writer=FileWriter()):
         self.name = name
+        self.writer = writer
 
-    @staticmethod
-    def log(text):
-        print('log---->', text)
+    def log(self, text):
+        text = f'log----> {text}'
+        self.writer.write(text)
