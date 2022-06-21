@@ -64,7 +64,7 @@ class TemplateView:
 class ListView(TemplateView):
     queryset = []
     template_name = 'list.html'
-    context_object_name = 'object_list'
+    context_object_name = 'objects_list'
 
     def get_queryset(self):
         print(self.queryset)
@@ -87,13 +87,13 @@ class CreateView(TemplateView):
     def get_request_data(request):
         return request['data']
 
-    def create_object(self, data):
+    def create_obj(self, data):
         pass
 
     def __call__(self, request):
         if request['method'] == 'POST':
             data = self.get_request_data(request)
-            self.create_object(data)
+            self.create_obj(data)
             return self.render_template_with_context()
         else:
             return super().__call__(request)
